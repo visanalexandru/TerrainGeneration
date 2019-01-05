@@ -49,6 +49,7 @@ private:
     void delete_worker_thread();
     vector<TerrainChunk*>chunk_list;
     bool could_a_chunk_be_seen_at(glm::vec2 position);
+    Heightmap auxiliary;
 
 
 };

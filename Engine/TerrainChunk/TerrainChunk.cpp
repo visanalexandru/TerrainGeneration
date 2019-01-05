@@ -1,9 +1,9 @@
 #include "TerrainChunk.h"
 
-TerrainChunk::TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,float sizex):
+TerrainChunk::TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,Heightmap&aux,float sizex):
     Drawable3d(pos),
     heightmap_builder(pos.x,pos.z,0,heightmap_properties),
-    heightmap((sizex+1)*2),
+    heightmap(aux),
     lods{2,1,0.5f,0.2f,0.1f}
 
 {

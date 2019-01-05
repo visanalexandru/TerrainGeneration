@@ -1,7 +1,8 @@
 #include "World.h"
 
 World::World(ShaderProgram*prog,Texture2d*tex,Camera&p_camera,int view_rangein,int chunk_sizein):
-    player_camera(p_camera)
+    player_camera(p_camera),
+    auxiliary(2*(chunk_sizein+1))
 {
     //ctor
     terrain_shader=prog;
@@ -63,7 +64,7 @@ void World::tick()
 void World::spawn_chunk_at(glm::vec2 position)
 {
     NoiseParameters a;
-    TerrainChunk*chunk=new TerrainChunk(glm::vec3(position.x,0,position.y),a,terrain_shader,terrain_texture,chunk_size);
+    TerrainChunk*chunk=new TerrainChunk(glm::vec3(position.x,0,position.y),a,terrain_shader,terrain_texture,auxiliary,chunk_size);
     string p=vector2_to_string(position);
     lock();
     chunks.insert({p,chunk});
