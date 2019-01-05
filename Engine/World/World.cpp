@@ -28,6 +28,7 @@ void World::create_worker_thread()
 {
     is_running=true;
     worker_thread=new thread([=] { thread_function(); });
+    cout<<"STARTED WORLD THREAD"<<endl;
 }
 void World::delete_worker_thread()
 {
@@ -131,7 +132,7 @@ void World::spawn_closest_chunk()
             glm::vec2 cr(x,z);
             glm::vec2 truechunk=cr+player_chunk;
             float dist=distance2d_between(truechunk,player_chunk);
-            if(!chunk_exists_at(truechunk)&&dist<min_distance)
+            if(!chunk_exists_at(truechunk)&&could_a_chunk_be_seen_at(truechunk)&&dist<min_distance)
             {
                 min_distance=dist;
                 best_position=truechunk;
@@ -178,6 +179,14 @@ void World::destroy_out_of_range_chunks()
             i--;
         }
     }
+
+}
+bool World::could_a_chunk_be_seen_at(glm::vec2 position)
+{
+    AABB box(glm::vec3(position.x,0,position.y),glm::vec3(chunk_size,100,chunk_size));
+    if(player_camera.can_see(box))
+        return true;
+    return false;
 
 }
 bool World::is_too_far(TerrainChunk*chunk)
