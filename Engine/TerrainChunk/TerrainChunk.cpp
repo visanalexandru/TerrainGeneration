@@ -51,7 +51,7 @@ void TerrainChunk::destroy_meshes()
 int TerrainChunk::get_lod_index(glm::vec3 camera_position)
 {
     float distance=glm::distance(centre,camera_position);
-    int index=distance/50;
+    int index=distance/100;
     index=min(index,4);
     return index;
 }

@@ -58,7 +58,7 @@ void World::tick()
 {
     spawn_closest_chunk();
     update_chunks();
-    //std::this_thread::sleep_for(0s);
+    //std::this_thread::sleep_for(0s);//uncomment this if you want this thread to sleep between ticks
 
 }
 void World::spawn_chunk_at(glm::vec2 position)

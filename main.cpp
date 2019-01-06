@@ -37,9 +37,11 @@ int main()
     PlayerInput input_processer(window,camera);
     NoiseParameters a(8,1.f,1.7f,0.5f,1,100.f);
     Renderer renderer(window,camera);
-    World world(basic_prog,basic_texture,camera,10,30);
+    World world(basic_prog,basic_texture,camera,20,30);
+    FpsCounter counter;
     while(!glfwWindowShouldClose(window))
     {
+        counter.Start();
         input_processer.process_input();
         renderer.Prepare_frame();
         renderer.Render(sky);
@@ -50,6 +52,7 @@ int main()
         renderer.Render_scene(world.scene);
         world.unlock();
         renderer.End_frame();
+        counter.End();
     }
     GraphicsUtil::destroy_window(window);
     GraphicsUtil::terminate_glfw();

@@ -5,15 +5,15 @@
 using namespace std;
 class FpsCounter
 {
-    public:
+public:
 
-        void Start();
-        FpsCounter();
-        virtual ~FpsCounter();
-        void End();
-    protected:
+    void Start();
+    FpsCounter();
+    virtual ~FpsCounter();
+    void End();
+protected:
 
-    private:
+private:
     float last_frame_time;
     float frame_begin_time;
     float total_sum;

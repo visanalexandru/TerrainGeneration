@@ -35,17 +35,17 @@ bool Frustum::boxInFrustum(AABB& box)
 {
 
     bool result = true;
-
-    for (auto& plane : m_planes)
+    for(int i=0; i<6; i++)
     {
 
-        if (plane.distanceToPoint(box.getVP(plane.normal)) < 0)
+
+        if (m_planes[i].distanceToPoint(box.getVP(m_planes[i].normal)) < 0)
         {
 
             return false;
 
         }
-        else if (plane.distanceToPoint(box.getVN(plane.normal)) < 0)
+        else if (m_planes[i].distanceToPoint(box.getVN(m_planes[i].normal)) < 0)
         {
 
             result = true;
@@ -53,7 +53,6 @@ bool Frustum::boxInFrustum(AABB& box)
         }
 
     }
-
     return result;
 
 }

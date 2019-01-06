@@ -14,7 +14,6 @@ protected:
 
 private:
 
-
 };
 
 #endif // SCENE_H

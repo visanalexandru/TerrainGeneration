@@ -19,6 +19,7 @@ public:
 protected:
 
 private:
+    int vertices_rendered;
     string model="model";
     string proj="projection";
     string view="view";

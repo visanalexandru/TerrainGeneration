@@ -10,6 +10,7 @@ void Renderer::Render(Drawable3d&to_draw)
     if(to_draw.mesh&&main_camera.can_see(to_draw) )
     {
         Mesh&mesh=*to_draw.mesh;
+        vertices_rendered+=mesh.vertices_size;
         mesh.bind_mesh();
         mesh.shader_program->set_mat4(camera_view_matrix,view);
         mesh.shader_program->set_mat4(main_camera.getProjectionMatrix(),proj);
@@ -38,6 +39,7 @@ void Renderer::Render(Skybox&skybox)
 }
 void Renderer::Prepare_frame()
 {
+    vertices_rendered=0;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     camera_view_matrix=main_camera.getViewMatrix();
 }
