@@ -16,7 +16,7 @@ protected:
 
 private:
     string path;
-    char char_array[1000];
+    char char_array[5000];
 };
 
 #endif // FILEREADER_H

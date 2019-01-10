@@ -6,7 +6,7 @@ Camera::Camera(glm::vec3 newpos, int screenwidth, int screenheight,float fov):Tr
     projection_matrix = makeProjectionMatrix(fov,screenwidth,screenheight);
     cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
     cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
-    camera_speed=100.f;
+    camera_speed=10.f;
     yaw=0;
     pitch=0;
 }

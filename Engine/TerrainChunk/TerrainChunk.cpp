@@ -63,8 +63,6 @@ void TerrainChunk::Update_LOD(glm::vec3 camera_pos)
 void TerrainChunk::create_mesh_data(float unit,MeshData&data)
 {
     glm::vec3 curr;
-    float y1,y2,y3,y4;
-    float x1,x2,x3,x4;
     float y1h,y2h,y3h,y4h;
     MeshBuilder builder(data);
     float y,x;
@@ -73,21 +71,21 @@ void TerrainChunk::create_mesh_data(float unit,MeshData&data)
         for(x=0; x<sizeofmesh; x+=unit)
         {
             curr=glm::vec3(x,0,y);
-            x1=x;
-            y1=y;
-            x2=x+unit;
-            y2=y;
-            x3=x+unit;
-            y3=y+unit;
-            x4=x;
-            y4=y+unit;
-            y1h=heightmap.values[(int)(2*y1)][(int)(2*x1)];
-            y2h=heightmap.values[(int)(2*y2)][(int)(2*x2)];
-            y3h=heightmap.values[(int)(2*y3)][(int)(2*x3)];
-            y4h=heightmap.values[(int)(2*y4)][(int)(2*x4)];
+            glm::vec2 p1(x,y);
+            glm::vec2 p2(x+unit,y);
+            glm::vec2 p3(x+unit,y+unit);
+            glm::vec2 p4(x,y+unit);
+            y1h=get_height_at(p1);
+            y2h=get_height_at(p2);
+            y3h=get_height_at(p3);
+            y4h=get_height_at(p4);
             builder.Add_face(curr,y4h,y3h,y2h,y1h,unit);
         }
     }
+}
+float TerrainChunk::get_height_at(glm::vec2 pos)
+{
+    return heightmap.values[(int)(2*pos.y)][(int)(2*pos.x)];
 }
 
 TerrainChunk::~TerrainChunk()

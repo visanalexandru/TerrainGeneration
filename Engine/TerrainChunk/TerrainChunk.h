@@ -31,6 +31,8 @@ private:
     Heightmap& heightmap;
     float lods[5];
     void Create_all_LODS();
+    float get_height_at(glm::vec2 pos);
+
 
 
 };

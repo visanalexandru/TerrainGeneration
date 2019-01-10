@@ -62,6 +62,8 @@ void PlayerInput::move_camera()
     glm::vec3 cameraPos=player_camera.get_position();
     glm::vec3 cameraFront=player_camera.cameraFront;
     glm::vec3 cameraUp=player_camera.cameraUp;
+    if(glfwGetKey(context_window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+        cameraSpeed*=2;
     if (glfwGetKey(context_window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos += cameraSpeed * cameraFront;
     if (glfwGetKey(context_window, GLFW_KEY_S) == GLFW_PRESS)

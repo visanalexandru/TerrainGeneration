@@ -31,8 +31,10 @@ void NoiseGenerator::generate_heightmap(Heightmap*heightmap,int sizex,float unit
 float NoiseGenerator::get_noise_at(float x,float y)
 {
     float div=parameters.scale;
-    float a=generator.fractal(octaves,x/div,y/div)*30;
-    return a;
+    float a=generator.fractal(octaves,x/div,y/div)*12-40;
+    float b=generator.fractal(octaves,x/div/4,y/div/4)*200;
+    b=std::max(b,40.f);
+    return a+b;
 }
 NoiseGenerator::~NoiseGenerator()
 {
