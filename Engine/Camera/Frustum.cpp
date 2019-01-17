@@ -34,7 +34,6 @@ bool Frustum::boxInFrustum(AABB& box)
 
 {
 
-    bool result = true;
     for(int i=0; i<6; i++)
     {
 
@@ -45,15 +44,9 @@ bool Frustum::boxInFrustum(AABB& box)
             return false;
 
         }
-        else if (m_planes[i].distanceToPoint(box.getVN(m_planes[i].normal)) < 0)
-        {
-
-            result = true;
-
-        }
 
     }
-    return result;
+    return true;
 
 }
 void Frustum::update(const glm::mat4& mat)

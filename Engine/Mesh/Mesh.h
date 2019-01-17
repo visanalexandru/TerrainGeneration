@@ -11,7 +11,7 @@ public:
     virtual ~Mesh();
     virtual void create_vao(MeshData&data)=0;
     void get_bounds(MeshData&data);
-    void bind_mesh();
+    void bind_mesh(bool bind_texture_and_shader);
     ShaderProgram*shader_program;
     Texture*texture;
     float bounds[6];

@@ -7,11 +7,13 @@ Mesh::Mesh(ShaderProgram*prog,Texture*tex)
     texture=tex;
     vao_index=0;
 }
-void Mesh::bind_mesh()
+void Mesh::bind_mesh(bool bind_texture_and_shader)
 {
-    shader_program->use_program();
-    texture->bind_texture();
-
+    if(bind_texture_and_shader)
+    {
+        shader_program->use_program();
+        texture->bind_texture();
+    }
     bind_vertex_array();
 
 }

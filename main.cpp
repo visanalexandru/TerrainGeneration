@@ -37,7 +37,7 @@ int main()
     PlayerInput input_processer(window,camera);
     NoiseParameters a(8,1.f,1.7f,0.5f,1,100.f);
     Renderer renderer(window,camera);
-    World world(basic_prog,basic_texture,camera,20,30);
+    World world(basic_prog,basic_texture,camera,10,60);
     FpsCounter counter;
     while(!glfwWindowShouldClose(window))
     {
