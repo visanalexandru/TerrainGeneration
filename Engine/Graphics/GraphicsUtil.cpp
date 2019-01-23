@@ -1,5 +1,6 @@
 #include "GraphicsUtil.h"
 #include<string>
+Camera *GraphicsUtil::main_camera=NULL;
 void GraphicsUtil::initialize_glfw()
 {
     glfwInit();
@@ -7,6 +8,10 @@ void GraphicsUtil::initialize_glfw()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+}
+void GraphicsUtil::set_main_camera(Camera*cam)
+{
+    main_camera=cam;
 }
 GLFWwindow* GraphicsUtil::create_window(int width,int height,std::string title)
 {
@@ -61,6 +66,10 @@ void GraphicsUtil::set_viewport(int width,int height)
 void GraphicsUtil::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+    if(main_camera)
+    {
+        main_camera->update_projection_matrix(width,height);
+    }
 }
 void GraphicsUtil::terminate_glfw()
 {

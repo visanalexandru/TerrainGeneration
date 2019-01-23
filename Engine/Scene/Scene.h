@@ -9,10 +9,11 @@ class Scene
 {
 public:
     Texture*texture_to_bind;
-   ShaderProgram*shader_to_bind;
+    ShaderProgram*shader_to_bind;
     Scene(Texture*a,ShaderProgram*b);
     virtual ~Scene();
     void add_drawable(Drawable3d&to_add);
+    void bind_resources();
     vector<Drawable3d*>to_draw;
 protected:
 

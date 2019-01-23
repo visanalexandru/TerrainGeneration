@@ -22,7 +22,6 @@ void load_all_resources(ResourceManager&manager)
 }
 int main()
 {
-
     GraphicsUtil::initialize_glfw();
     ResourceManager manager;
     GLFWwindow*window=GraphicsUtil::create_window(500,500,"test");
@@ -34,6 +33,7 @@ int main()
     Texture2d*basic_texture=manager.get_texture("test3");
     Skybox sky(skybox_prog,manager.get_cubemap("test4"));
     Camera camera(glm::vec3(0,0,0),500,500,100);
+    GraphicsUtil::set_main_camera(&camera);
     PlayerInput input_processer(window,camera);
     NoiseParameters a(8,1.f,1.7f,0.5f,1,100.f);
     Renderer renderer(window,camera);

@@ -20,8 +20,7 @@ void Renderer::Render(Drawable3d&to_draw)
 }
 void Renderer::Render_scene(Scene&scene)
 {
-    scene.shader_to_bind->use_program();
-    scene.texture_to_bind->bind_texture();
+    scene.bind_resources();
     int si=scene.to_draw.size();
     for(int i=0; i<si; i++)
         Render(*scene.to_draw[i]);

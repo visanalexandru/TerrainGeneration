@@ -3,7 +3,8 @@
 Camera::Camera(glm::vec3 newpos, int screenwidth, int screenheight,float fov):Transformable(newpos)
 {
     //ctor
-    projection_matrix = makeProjectionMatrix(fov,screenwidth,screenheight);
+    camera_fov=fov;
+    update_projection_matrix(screenwidth,screenheight);
     cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
     cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
     camera_speed=10.f;
@@ -41,6 +42,10 @@ void Camera::Update_front_vector()
     frontv.y = sin(glm::radians(pitch));
     frontv.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     cameraFront = glm::normalize(frontv);
+}
+void Camera::update_projection_matrix(int width,int height)
+{
+    projection_matrix = makeProjectionMatrix(camera_fov,width,height);
 }
 glm::mat4 Camera::makeProjectionMatrix(float fov,int width,int height)
 {
