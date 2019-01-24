@@ -17,7 +17,7 @@ void load_all_resources(ResourceManager&manager)
     manager.load_fragment_shader("Resources/Shaders/skybox_shader.frag","skyboxfrag");
     manager.create_program("basicvert","basicfrag","basic_shader");
     manager.create_program("skyboxvert","skyboxfrag","skybox_shader");
-    manager.load_texture("Resources/Textures/dirt.png","test3");
+    manager.load_texture("Resources/Textures/grass2.jpg","test3");
     manager.load_cubemap("Resources/Cubemap","test4");
 }
 int main()
@@ -45,12 +45,12 @@ int main()
         input_processer.process_input();
         renderer.Prepare_frame();
         renderer.Render(sky);
-        world.lock();
+        world.lock();//makes the world thread wait for completion
         world.destroy_out_of_range_chunks();
         world.create_meshes();
         world.create_scene();
         renderer.Render_scene(world.scene);
-        world.unlock();
+        world.unlock();//the world thread is resumed
         renderer.End_frame();
         counter.End();
     }
