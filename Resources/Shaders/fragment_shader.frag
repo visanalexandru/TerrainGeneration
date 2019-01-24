@@ -9,9 +9,9 @@ vec3 get_color()
     float ypos=FragPos.y+50;
     float gradient=ypos/100;
     vec3 ret;
-    if(ypos<50)
+    if(ypos<40)
     {
-        ret=vec3(1,0.5,1);
+        ret=vec3(0.55,0.25,0.55);
     }
     else if(ypos<60)
     {
