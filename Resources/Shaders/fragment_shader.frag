@@ -17,7 +17,8 @@ vec3 get_color()
     {
         ret=vec3(1,0.8,1)*gradient;
     }
-    else{
+    else
+    {
         ret=vec3(1,0.5,1)*1.3;
     }
     return ret;

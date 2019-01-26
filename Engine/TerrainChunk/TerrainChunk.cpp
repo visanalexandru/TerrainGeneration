@@ -9,6 +9,7 @@ TerrainChunk::TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,Sh
 {
     //ctor
     needs_to_build_mesh=false;
+    max_height=0;
     init_meshes(prog,texture);
     sizeofmesh=sizex;
     build_meshes_data();
@@ -50,7 +51,19 @@ void TerrainChunk::destroy_meshes()
 }
 int TerrainChunk::get_lod_index(glm::vec3 camera_position)
 {
-    float distance=glm::distance(centre,camera_position);
+    float distance;
+    if(camera_position.y<max_height)
+    {
+        glm::vec3 centre2=centre;
+        centre2.y=camera_position.y;
+        distance=glm::distance(centre2,camera_position);
+    }
+    else
+    {
+        glm::vec3 centre2=centre;
+        centre2.y=max_height;
+        distance=glm::distance(centre2,camera_position);
+    }
     int index=distance/100;
     index=min(index,4);
     return index;
@@ -79,6 +92,10 @@ void TerrainChunk::create_mesh_data(float unit,MeshData&data)
             y2h=get_height_at(p2);
             y3h=get_height_at(p3);
             y4h=get_height_at(p4);
+            max_height=max(max_height,y1h);
+            max_height=max(max_height,y2h);
+            max_height=max(max_height,y3h);
+            max_height=max(max_height,y4h);
             builder.Add_face(curr,y4h,y3h,y2h,y1h,unit);
         }
     }
