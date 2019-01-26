@@ -1,10 +1,10 @@
 #include "Camera.h"
 
-Camera::Camera(glm::vec3 newpos, int screenwidth, int screenheight,float fov):Transformable(newpos)
+Camera::Camera(glm::vec3 newpos, window_camera_properties prop):Transformable(newpos)
 {
     //ctor
-    camera_fov=fov;
-    update_projection_matrix(screenwidth,screenheight);
+    camera_fov=prop.fov;
+    update_projection_matrix(prop.width,prop.height);
     cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
     cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
     camera_speed=10.f;

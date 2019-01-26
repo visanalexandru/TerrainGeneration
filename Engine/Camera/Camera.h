@@ -3,10 +3,11 @@
 #include"../Transformable/Transformable.h"
 #include<cmath>
 #include"Frustum.h"
+#include"../ConfigParser/ConfigParser.h"
 class Camera:public Transformable
 {
 public:
-    Camera(glm::vec3 newpos,int screenwidth,int screenheight,float fov);
+    Camera(glm::vec3 newpos,window_camera_properties prop);
     virtual ~Camera();
     glm::mat4 getProjectionMatrix();
     glm::mat4 getViewMatrix();

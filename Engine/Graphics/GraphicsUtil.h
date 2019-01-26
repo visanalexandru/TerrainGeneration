@@ -4,11 +4,12 @@
 #include <GLFW/glfw3.h>
 #include<iostream>
 #include"../Camera/Camera.h"
+#include"../ConfigParser/ConfigParser.h"
 namespace GraphicsUtil
 {
 extern Camera*main_camera;
 void initialize_glfw();
-GLFWwindow* create_window(int width,int height,std::string title);
+GLFWwindow* create_window(window_camera_properties prop);
 bool initialize_glad();
 void make_current_context(GLFWwindow*window);
 void set_viewport(int width,int height);

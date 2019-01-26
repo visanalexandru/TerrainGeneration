@@ -1,0 +1,5 @@
+width 500
+height 500
+fov 100
+use_vsync 1
+program_name TerrainGeneration

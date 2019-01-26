@@ -13,9 +13,10 @@ void GraphicsUtil::set_main_camera(Camera*cam)
 {
     main_camera=cam;
 }
-GLFWwindow* GraphicsUtil::create_window(int width,int height,std::string title)
+GLFWwindow* GraphicsUtil::create_window(window_camera_properties prop)
 {
-    GLFWwindow* window = glfwCreateWindow(width, height,title.c_str(), NULL, NULL);
+    string title=prop.program_name;
+    GLFWwindow* window = glfwCreateWindow(prop.width, prop.height,title.c_str(), NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -24,11 +25,11 @@ GLFWwindow* GraphicsUtil::create_window(int width,int height,std::string title)
     else
         make_current_context(window);
     initialize_glad();
-    glViewport(0,0,width,height);
+    glViewport(0,0,prop.width,prop.height);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glEnable(GL_BLEND);
-    glfwSwapInterval(0);
+    glfwSwapInterval(prop.use_vsync);
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

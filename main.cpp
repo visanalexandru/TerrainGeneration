@@ -20,11 +20,17 @@ void load_all_resources(ResourceManager&manager)
     manager.load_texture("Resources/Textures/grass2.jpg","test3");
     manager.load_cubemap("Resources/Cubemap","test4");
 }
+ConfigParser parse_config()
+{
+    return ConfigParser("Resources/config.txt");
+
+}
 int main()
 {
     GraphicsUtil::initialize_glfw();
     ResourceManager manager;
-    GLFWwindow*window=GraphicsUtil::create_window(500,500,"test");
+    ConfigParser parsed=parse_config();
+    GLFWwindow*window=GraphicsUtil::create_window(parsed.w_properties);
     if(window==NULL)
         return -1;
     load_all_resources(manager);
@@ -32,7 +38,7 @@ int main()
     ShaderProgram* skybox_prog=manager.get_shader_program("skybox_shader");
     Texture2d*basic_texture=manager.get_texture("test3");
     Skybox sky(skybox_prog,manager.get_cubemap("test4"));
-    Camera camera(glm::vec3(10,20,10),500,500,100);
+    Camera camera(glm::vec3(10,20,10),parsed.w_properties);
     GraphicsUtil::set_main_camera(&camera);
     PlayerInput input_processer(window,camera);
     NoiseParameters a(8,1.f,1.7f,0.5f,1,100.f);
