@@ -13,13 +13,12 @@ public:
     void Add_triangle(unsigned index1,unsigned index2,unsigned index3);
     void Add_face(glm::vec3 position,int face_index);
     void Add_cube(glm::vec3 position);
-    void Add_face(glm::vec3 position,float y1,float y2,float y3,float y4,float unit);
+    void Add_face(glm::vec3 position,float heights[],float unit,glm::vec3 normal[]);
     void Set_bounds(float x,float y,float z);
     virtual ~MeshBuilder();
 protected:
 
 private:
-    glm::vec3 calculate_normal(glm::vec3 p1,glm::vec3 p2,glm::vec3 p3);
     glm::vec3 cube_face[6][4];
     MeshData&to_modify;
 };

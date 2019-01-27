@@ -106,22 +106,14 @@ void MeshBuilder::Add_cube(glm::vec3 position)
         Add_face(position,i);
     }
 }
-glm::vec3 MeshBuilder::calculate_normal(glm::vec3 p1,glm::vec3 p2,glm::vec3 p3)
-{
-    glm::vec3 u=p2-p1;
-    glm::vec3 v=p3-p1;
-    glm::vec3 normal=glm::cross(u,v);
-    return normal;
-
-}
-void MeshBuilder::Add_face(glm::vec3 position,float y1,float y2,float y3,float y4,float unit)
+void MeshBuilder::Add_face(glm::vec3 position,float heights[],float unit,glm::vec3 normal[])
 {
 
     int v=to_modify.verticeslist.size()/8;
-    glm::vec3 off1(0,y1,0);
-    glm::vec3 off2(0,y2,0);
-    glm::vec3 off3(0,y3,0);
-    glm::vec3 off4(0,y4,0);
+    glm::vec3 off1(0,heights[0],0);
+    glm::vec3 off2(0,heights[1],0);
+    glm::vec3 off3(0,heights[2],0);
+    glm::vec3 off4(0,heights[3],0);
     glm::vec3 point1=position+cube_face[4][0]*unit+off1;
     glm::vec3 point2=position+cube_face[4][1]*unit+off2;
     glm::vec3 point3=position+cube_face[4][2]*unit+off3;
@@ -130,14 +122,10 @@ void MeshBuilder::Add_face(glm::vec3 position,float y1,float y2,float y3,float y
     point2.y-=unit;
     point3.y-=unit;
     point4.y-=unit;
-    glm::vec3 normal1=calculate_normal(point1,point2,point3);
-    glm::vec3 normal2=calculate_normal(point3,point4,point1);
-    glm::vec3 avrg=normal1+normal2;
-    avrg/=2;
-    Add_vertex(point1,glm::vec2(0,0),avrg);
-    Add_vertex(point2,glm::vec2(1,0),avrg);
-    Add_vertex(point3,glm::vec2(1,1),avrg);
-    Add_vertex(point4,glm::vec2(0,1),avrg);
+    Add_vertex(point1,glm::vec2(0,0),normal[0]);
+    Add_vertex(point2,glm::vec2(1,0),normal[1]);
+    Add_vertex(point3,glm::vec2(1,1),normal[2]);
+    Add_vertex(point4,glm::vec2(0,1),normal[3]);
     Add_triangle(v,v+1,v+2);
     Add_triangle(v+2,v+3,v+0);
 

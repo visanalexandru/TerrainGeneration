@@ -8,7 +8,7 @@
 class TerrainChunk:public Drawable3d
 {
 public:
-    TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram*prog,Texture2d*texture,Heightmap<float>&aux,float sizex);
+    TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,Heightmap<float>&aux,Heightmap<glm::vec3>&normal_aux,Heightmap<int>&freq_aux,float sizex);
     virtual ~TerrainChunk();
     void create_meshes();
     void Update_LOD(glm::vec3 camera_pos);
@@ -33,7 +33,12 @@ private:
     void Create_all_LODS();
     float get_height_at(glm::vec2 pos);
     float max_height;
-
+    Heightmap<glm::vec3>&normal_map;
+    Heightmap<int>&freq_map;
+    void generate_normal_map();
+    glm::vec3 calculate_normal(glm::vec3 p1,glm::vec3 p2,glm::vec3 p3);
+    glm::vec3 get_normal_at(glm::vec2 pos);
+    void init_aux();
 
 
 };

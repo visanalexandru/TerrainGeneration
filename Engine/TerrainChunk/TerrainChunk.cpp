@@ -1,10 +1,12 @@
 #include "TerrainChunk.h"
 
-TerrainChunk::TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,Heightmap<float>&aux,float sizex):
+TerrainChunk::TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,Heightmap<float>&aux,Heightmap<glm::vec3>&normal_aux,Heightmap<int>&freq_aux,float sizex):
     Drawable3d(pos),
     heightmap_builder(pos.x,pos.z,0,heightmap_properties),
     heightmap(aux),
-    lods{2,1,0.5f,0.2f,0.1f}
+    lods{2,1,0.5f,0.2f,0.1f},
+    normal_map(normal_aux),
+    freq_map(freq_aux)
 
 {
     //ctor
@@ -24,10 +26,66 @@ void TerrainChunk::init_meshes(ShaderProgram*p,Texture2d*t)
         meshes[i]=new Mesh3d(p,t);
 
 }
+void TerrainChunk::init_aux()
+{
+    int sizet=2*(sizeofmesh+1);
+    for(int i=0; i<sizet; i++)
+        for(int k=0; k<sizet; k++)
+        {
+            freq_map.values[i][k]=0;
+            normal_map.values[i][k]=glm::vec3(0,0,0);
+        }
+
+}
+void TerrainChunk::generate_normal_map()
+{
+    int p1,p2,p3,p4;
+    glm::vec3 a,b,c,d,normal1,normal2,avrg;
+    int maxx=2*(sizeofmesh+1);
+    for(int i=0; i<maxx-1; i++)
+    {
+        for(int k=0; k<maxx-1; k++)
+        {
+            p1=heightmap.values[i][k];
+            p2=heightmap.values[i][k+1];
+            p3=heightmap.values[i+1][k+1];
+            p4=heightmap.values[i+1][k];
+            a=glm::vec3(i,p1,k);
+            b=glm::vec3(i,p2,k+1);
+            c=glm::vec3(i+1,p3,k+1);
+            d=glm::vec3(i+1,p4,k);
+            normal1=calculate_normal(a,b,c);
+            normal2=calculate_normal(c,d,a);
+            avrg=normal1+normal2;
+            avrg/=2;
+            normal_map.values[i][k]+=avrg;
+            normal_map.values[i][k+1]+=avrg;
+            normal_map.values[i+1][k+1]+=avrg;
+            normal_map.values[i+1][k]+=avrg;
+            freq_map.values[i][k]++;
+            freq_map.values[i][k+1]++;
+            freq_map.values[i+1][k+1]++;
+            freq_map.values[i+1][k]++;
+
+        }
+    }
+
+
+}
+glm::vec3 TerrainChunk::calculate_normal(glm::vec3 p1,glm::vec3 p2,glm::vec3 p3)
+{
+    glm::vec3 u=p2-p1;
+    glm::vec3 v=p3-p1;
+    glm::vec3 normal=glm::cross(u,v);
+    return normal;
+
+}
 void TerrainChunk::build_meshes_data()
 {
     int size=(sizeofmesh+1)*2;
+    init_aux();
     heightmap_builder.generate_heightmap(&heightmap,size,2);
+    generate_normal_map();
     Create_all_LODS();
 }
 void TerrainChunk::Create_all_LODS()
@@ -76,7 +134,8 @@ void TerrainChunk::Update_LOD(glm::vec3 camera_pos)
 void TerrainChunk::create_mesh_data(float unit,MeshData&data)
 {
     glm::vec3 curr;
-    float y1h,y2h,y3h,y4h;
+    float heights[4];
+    glm::vec3 normals[4];
     MeshBuilder builder(data);
     float y,x;
     for(y=0; y<sizeofmesh; y+=unit)
@@ -88,15 +147,17 @@ void TerrainChunk::create_mesh_data(float unit,MeshData&data)
             glm::vec2 p2(x+unit,y);
             glm::vec2 p3(x+unit,y+unit);
             glm::vec2 p4(x,y+unit);
-            y1h=get_height_at(p1);
-            y2h=get_height_at(p2);
-            y3h=get_height_at(p3);
-            y4h=get_height_at(p4);
-            max_height=max(max_height,y1h);
-            max_height=max(max_height,y2h);
-            max_height=max(max_height,y3h);
-            max_height=max(max_height,y4h);
-            builder.Add_face(curr,y4h,y3h,y2h,y1h,unit);
+            heights[3]=get_height_at(p1);
+            heights[2]=get_height_at(p2);
+            heights[1]=get_height_at(p3);
+            heights[0]=get_height_at(p4);
+            for(int i=0; i<4; i++)
+                max_height=max(max_height,heights[i]);
+            normals[3]=get_normal_at(p1);
+            normals[2]=get_normal_at(p2);
+            normals[1]=get_normal_at(p3);
+            normals[0]=get_normal_at(p4);
+            builder.Add_face(curr,heights,unit,normals);
         }
     }
 }
@@ -104,7 +165,12 @@ float TerrainChunk::get_height_at(glm::vec2 pos)
 {
     return heightmap.values[(int)(2*pos.y)][(int)(2*pos.x)];
 }
-
+glm::vec3 TerrainChunk::get_normal_at(glm::vec2 pos)
+{
+    glm::vec3 a=normal_map.values[(int)(2*pos.y)][(int)(2*pos.x)];
+    a/=freq_map.values[(int)(2*pos.y)][(int)(2*pos.x)];
+    return a;
+}
 TerrainChunk::~TerrainChunk()
 {
     //dtor
