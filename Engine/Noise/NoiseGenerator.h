@@ -9,7 +9,7 @@ class NoiseGenerator
 public:
     NoiseGenerator(float xpositiony,float ypositiony,float seedy,NoiseParameters params);
     virtual ~NoiseGenerator();
-    void generate_heightmap(Heightmap*heightmap,int sizex,float unit);
+    void generate_heightmap(Heightmap<float>*heightmap,int sizex,float unit);
     float get_noise_at(float x,float y);
 
 protected:

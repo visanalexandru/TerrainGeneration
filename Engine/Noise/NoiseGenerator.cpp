@@ -11,7 +11,7 @@ NoiseGenerator::NoiseGenerator(float xpositiony,float ypositiony,float seedy,Noi
     octaves=params.octaves;
 
 }
-void NoiseGenerator::generate_heightmap(Heightmap*heightmap,int sizex,float unit)
+void NoiseGenerator::generate_heightmap(Heightmap<float>*heightmap,int sizex,float unit)
 {
     SimplexNoise noise;
     for(int y=0; y<sizex; y++)
