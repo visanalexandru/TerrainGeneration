@@ -1,12 +1,12 @@
 #include "TerrainChunk.h"
 
-TerrainChunk::TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,Heightmap<float>&aux,Heightmap<glm::vec3>&normal_aux,Heightmap<int>&freq_aux,float sizex):
+TerrainChunk::TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,Chunk_auxiliaries aux,float sizex):
     Drawable3d(pos),
     heightmap_builder(pos.x,pos.z,0,heightmap_properties),
-    heightmap(aux),
+    heightmap(aux.height_aux),
     lods{2,1,0.5f,0.2f,0.1f},
-    normal_map(normal_aux),
-    freq_map(freq_aux)
+    normal_map(aux.normal_aux),
+    freq_map(aux.freq_aux)
 
 {
     //ctor
@@ -136,6 +136,7 @@ void TerrainChunk::create_mesh_data(float unit,MeshData&data)
     glm::vec3 curr;
     float heights[4];
     glm::vec3 normals[4];
+    glm::vec2 p1,p2,p3,p4;
     MeshBuilder builder(data);
     float y,x;
     for(y=0; y<sizeofmesh; y+=unit)
@@ -143,10 +144,15 @@ void TerrainChunk::create_mesh_data(float unit,MeshData&data)
         for(x=0; x<sizeofmesh; x+=unit)
         {
             curr=glm::vec3(x,0,y);
-            glm::vec2 p1(x,y);
-            glm::vec2 p2(x+unit,y);
-            glm::vec2 p3(x+unit,y+unit);
-            glm::vec2 p4(x,y+unit);
+            p1=glm::vec2(x,y);
+            p1.x=x;
+            p1.y=y;
+            p2.x=x+unit;
+            p2.y=y;
+            p3.x=x+unit;
+            p3.y=y+unit;
+            p4.x=x;
+            p4.y=y+unit;
             heights[3]=get_height_at(p1);
             heights[2]=get_height_at(p2);
             heights[1]=get_height_at(p3);

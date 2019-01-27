@@ -5,10 +5,18 @@
 #include"../Noise/Heightmap.h"
 #include"../Noise/NoiseGenerator.h"
 #include"../Mesh/MeshBuilder.h"
+struct Chunk_auxiliaries
+{
+    Heightmap<float>&height_aux;
+    Heightmap<glm::vec3>&normal_aux;
+    Heightmap<int>&freq_aux;
+    Chunk_auxiliaries(Heightmap<float>&a,Heightmap<glm::vec3>&b,Heightmap<int>&c):height_aux(a),normal_aux(b),freq_aux(c) {}
+
+};
 class TerrainChunk:public Drawable3d
 {
 public:
-    TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,Heightmap<float>&aux,Heightmap<glm::vec3>&normal_aux,Heightmap<int>&freq_aux,float sizex);
+    TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,ShaderProgram* prog,Texture2d*texture,Chunk_auxiliaries aux,float sizex);
     virtual ~TerrainChunk();
     void create_meshes();
     void Update_LOD(glm::vec3 camera_pos);

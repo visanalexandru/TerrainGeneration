@@ -67,7 +67,8 @@ void World::tick()
 void World::spawn_chunk_at(glm::vec2 position)
 {
     NoiseParameters a;
-    TerrainChunk*chunk=new TerrainChunk(glm::vec3(position.x,0,position.y),a,terrain_shader,terrain_texture,auxiliary,normal_auxiliary,freq_auxiliary,chunk_size);
+    Chunk_auxiliaries aux(auxiliary,normal_auxiliary,freq_auxiliary);
+    TerrainChunk*chunk=new TerrainChunk(glm::vec3(position.x,0,position.y),a,terrain_shader,terrain_texture,aux,chunk_size);
     string p=vector2_to_string(position);
     lock();
     chunks.insert({p,chunk});
