@@ -39,7 +39,7 @@ void TerrainChunk::init_aux()
 }
 void TerrainChunk::generate_normal_map()
 {
-    int p1,p2,p3,p4;
+    float p1,p2,p3,p4;
     glm::vec3 a,b,c,d,normal1,normal2,avrg;
     int maxx=2*(sizeofmesh+1);
     for(int i=0; i<maxx-1; i++)
@@ -51,21 +51,17 @@ void TerrainChunk::generate_normal_map()
             p3=heightmap.values[i+1][k+1];
             p4=heightmap.values[i+1][k];
             a=glm::vec3(i,p1,k);
-            b=glm::vec3(i,p2,k+1);
-            c=glm::vec3(i+1,p3,k+1);
-            d=glm::vec3(i+1,p4,k);
+            b=glm::vec3(i,p2,k+0.5);
+            c=glm::vec3(i+0.5,p3,k+0.5);
+            d=glm::vec3(i+0.5,p4,k);
             normal1=calculate_normal(a,b,c);
             normal2=calculate_normal(c,d,a);
-            avrg=normal1+normal2;
-            avrg/=2;
-            normal_map.values[i][k]+=avrg;
-            normal_map.values[i][k+1]+=avrg;
-            normal_map.values[i+1][k+1]+=avrg;
-            normal_map.values[i+1][k]+=avrg;
-            freq_map.values[i][k]++;
-            freq_map.values[i][k+1]++;
-            freq_map.values[i+1][k+1]++;
-            freq_map.values[i+1][k]++;
+            normal_map.values[i][k]+=normal1;
+            normal_map.values[i][k+1]+=normal1;
+            normal_map.values[i+1][k+1]+=normal1;
+            normal_map.values[i+1][k+1]+=normal2;
+            normal_map.values[i+1][k]+=normal2;
+            normal_map.values[i][k]+=normal2;
 
         }
     }
@@ -174,7 +170,6 @@ float TerrainChunk::get_height_at(glm::vec2 pos)
 glm::vec3 TerrainChunk::get_normal_at(glm::vec2 pos)
 {
     glm::vec3 a=normal_map.values[(int)(2*pos.y)][(int)(2*pos.x)];
-    a/=freq_map.values[(int)(2*pos.y)][(int)(2*pos.x)];
     return a;
 }
 TerrainChunk::~TerrainChunk()
