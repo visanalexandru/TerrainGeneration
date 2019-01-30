@@ -9,8 +9,7 @@ struct Chunk_auxiliaries
 {
     Heightmap<float>&height_aux;
     Heightmap<glm::vec3>&normal_aux;
-    Heightmap<int>&freq_aux;
-    Chunk_auxiliaries(Heightmap<float>&a,Heightmap<glm::vec3>&b,Heightmap<int>&c):height_aux(a),normal_aux(b),freq_aux(c) {}
+    Chunk_auxiliaries(Heightmap<float>&a,Heightmap<glm::vec3>&b):height_aux(a),normal_aux(b) {}
 
 };
 class TerrainChunk:public Drawable3d
@@ -42,7 +41,6 @@ private:
     float get_height_at(glm::vec2 pos);
     float max_height;
     Heightmap<glm::vec3>&normal_map;
-    Heightmap<int>&freq_map;
     void generate_normal_map();
     glm::vec3 calculate_normal(glm::vec3 p1,glm::vec3 p2,glm::vec3 p3);
     glm::vec3 get_normal_at(glm::vec2 pos);

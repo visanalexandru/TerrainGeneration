@@ -5,9 +5,7 @@ TerrainChunk::TerrainChunk(glm::vec3 pos,NoiseParameters heightmap_properties,Sh
     heightmap_builder(pos.x,pos.z,0,heightmap_properties),
     heightmap(aux.height_aux),
     lods{2,1,0.5f,0.2f,0.1f},
-    normal_map(aux.normal_aux),
-    freq_map(aux.freq_aux)
-
+    normal_map(aux.normal_aux)
 {
     //ctor
     needs_to_build_mesh=false;
@@ -32,7 +30,6 @@ void TerrainChunk::init_aux()
     for(int i=0; i<sizet; i++)
         for(int k=0; k<sizet; k++)
         {
-            freq_map.values[i][k]=0;
             normal_map.values[i][k]=glm::vec3(0,0,0);
         }
 

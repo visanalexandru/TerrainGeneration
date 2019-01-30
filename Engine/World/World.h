@@ -51,7 +51,6 @@ private:
     bool could_a_chunk_be_seen_at(glm::vec2 position);
     Heightmap<float> auxiliary;
     Heightmap<glm::vec3> normal_auxiliary;
-    Heightmap<int> freq_auxiliary;
 
 
 };
