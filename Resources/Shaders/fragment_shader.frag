@@ -4,10 +4,14 @@ in vec2 TexCoord;
 in vec3 Normal;
 in vec3 FragPos;
 uniform sampler2D ourTexture;
+float get_gradient(float height)
+{
+    return height/100;
+}
 vec3 get_color()
 {
     float ypos=FragPos.y+50;
-    float gradient=ypos/100;
+    float gradient=get_gradient(ypos);
     vec3 ret;
     if(ypos<40)
     {
@@ -19,7 +23,9 @@ vec3 get_color()
     }
     else
     {
-        ret=vec3(1,0.5,1)*1.3;
+        float posy=ypos-60;
+        posy=min(posy,10);
+        ret=vec3(1,0.8,1)*get_gradient(60)+vec3(1,0.3,1)*get_gradient(posy)*10;
     }
     return ret;
 }
