@@ -93,11 +93,11 @@ void ModelLoader::load_model(MeshData&data)
         int index=get_unique_index(verts[i]);
         if(index!=-1)
         {
-            data.triangleslist.push_back(index);//has found an identical vertex->do not use this one
+            data.add_triangle(index);//has found an identical vertex->do not use this one
         }
         else
         {
-            data.triangleslist.push_back(pushed);
+            data.add_triangle(pushed);
             unique_vertices.insert({verts[i].get_id(),pushed});
             builder.Add_vertex(verts[i].position,verts[i].uv);
             pushed++;
@@ -105,7 +105,7 @@ void ModelLoader::load_model(MeshData&data)
         }
 
     }
-    cout<<"model loaded successfully: "<<data.verticeslist.size()<<" vertices, "<<data.triangleslist.size()<<" triangles"<<endl;
+    cout<<"model loaded successfully: "<<data.get_vertices_size()<<" vertices, "<<data.get_triangles_size()<<" triangles"<<endl;
 }
 int ModelLoader::get_unique_index(vertex&vert)
 {

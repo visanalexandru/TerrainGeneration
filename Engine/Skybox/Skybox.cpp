@@ -3,18 +3,18 @@
 Skybox::Skybox(ShaderProgram*shaderprog,Texture3d*skybox_texture):mesh(shaderprog,skybox_texture)
 {
     //ctor
-    float skyboxVertices[] =
+    glm::vec3 skyboxVertices[] =
     {
         //front
-        -1.0, -1.0,  1.0,
-        1.0, -1.0,  1.0,
-        1.0,  1.0,  1.0,
-        -1.0,  1.0,  1.0,
+        glm::vec3(-1.0, -1.0,  1.0),
+        glm::vec3(1.0, -1.0,  1.0),
+        glm::vec3(1.0,  1.0,  1.0),
+        glm::vec3( -1.0,  1.0,  1.0),
         // back
-        -1.0, -1.0, -1.0,
-        1.0, -1.0, -1.0,
-        1.0,  1.0, -1.0,
-        -1.0,  1.0, -1.0,
+        glm::vec3(-1.0, -1.0, -1.0),
+        glm::vec3( 1.0, -1.0, -1.0),
+        glm::vec3( 1.0,  1.0, -1.0),
+        glm::vec3(-1.0,  1.0, -1.0),
     };
     unsigned skyboxindices[]=
     {
@@ -40,9 +40,9 @@ Skybox::Skybox(ShaderProgram*shaderprog,Texture3d*skybox_texture):mesh(shaderpro
     };
     MeshData data;
     for(int i=0; i<24; i++)
-        data.verticeslist.push_back(skyboxVertices[i]);
+        data.add_vertex(skyboxVertices[i]);
     for(int i=0; i<36; i++)
-        data.triangleslist.push_back(skyboxindices[i]);
+        data.add_triangle(skyboxindices[i]);
     mesh.create_vao(data);
 
 }

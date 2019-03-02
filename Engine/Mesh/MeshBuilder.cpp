@@ -44,14 +44,7 @@ void MeshBuilder::Add_vertex(glm::vec3 position,glm::vec2 texture_coordinates)
     x=position.x;
     y=position.y;
     z=position.z;
-    float x2,y2;
-    x2=texture_coordinates.x;
-    y2=texture_coordinates.y;
-    to_modify.verticeslist.push_back(x);
-    to_modify.verticeslist.push_back(y);
-    to_modify.verticeslist.push_back(z);
-    to_modify.verticeslist.push_back(x2);
-    to_modify.verticeslist.push_back(y2);
+    to_modify.add_vertex(position,texture_coordinates,glm::vec3(0,0,0));
     Set_bounds(x,y,z);
 }
 void MeshBuilder::Add_vertex(glm::vec3 position,glm::vec2 texture_coordinates,glm::vec3 normal)
@@ -60,21 +53,7 @@ void MeshBuilder::Add_vertex(glm::vec3 position,glm::vec2 texture_coordinates,gl
     x=position.x;
     y=position.y;
     z=position.z;
-    float x2,y2;
-    x2=texture_coordinates.x;
-    y2=texture_coordinates.y;
-    float x3,y3,z3;
-    x3=normal.x;
-    y3=normal.y;
-    z3=normal.z;
-    to_modify.verticeslist.push_back(x);
-    to_modify.verticeslist.push_back(y);
-    to_modify.verticeslist.push_back(z);
-    to_modify.verticeslist.push_back(x2);
-    to_modify.verticeslist.push_back(y2);
-    to_modify.verticeslist.push_back(x3);
-    to_modify.verticeslist.push_back(y3);
-    to_modify.verticeslist.push_back(z3);
+    to_modify.add_vertex(position,texture_coordinates,normal);
     Set_bounds(x,y,z);
 }
 void MeshBuilder::Set_bounds(float x,float y,float z)
@@ -109,7 +88,7 @@ void MeshBuilder::Add_cube(glm::vec3 position)
 void MeshBuilder::Add_face(glm::vec3 position,float heights[],float unit,glm::vec3 normal[])
 {
 
-    int v=to_modify.verticeslist.size()/8;
+    int v=to_modify.get_vertices_size()/8;
     glm::vec3 off1(0,heights[0],0);
     glm::vec3 off2(0,heights[1],0);
     glm::vec3 off3(0,heights[2],0);
@@ -132,7 +111,7 @@ void MeshBuilder::Add_face(glm::vec3 position,float heights[],float unit,glm::ve
 }
 void MeshBuilder::Add_face(glm::vec3 position,int face_index)
 {
-    int v=to_modify.verticeslist.size()/5;
+    int v=to_modify.get_vertices_size()/5;
     Add_vertex(position+cube_face[face_index][0],glm::vec2(0,0));
     Add_vertex(position+cube_face[face_index][1],glm::vec2(1,0));
     Add_vertex(position+cube_face[face_index][2],glm::vec2(1,1));
@@ -142,9 +121,9 @@ void MeshBuilder::Add_face(glm::vec3 position,int face_index)
 }
 void MeshBuilder::Add_triangle(unsigned index1,unsigned index2,unsigned index3)
 {
-    to_modify.triangleslist.push_back(index1);
-    to_modify.triangleslist.push_back(index2);
-    to_modify.triangleslist.push_back(index3);
+    to_modify.add_triangle(index1);
+    to_modify.add_triangle(index2);
+    to_modify.add_triangle(index3);
 }
 MeshBuilder::~MeshBuilder()
 {
