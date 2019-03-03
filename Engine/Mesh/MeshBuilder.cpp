@@ -40,43 +40,11 @@ MeshBuilder::MeshBuilder(MeshData&meshdata):to_modify(meshdata)
 }
 void MeshBuilder::Add_vertex(glm::vec3 position,glm::vec2 texture_coordinates)
 {
-    float x,y,z;
-    x=position.x;
-    y=position.y;
-    z=position.z;
     to_modify.add_vertex(position,texture_coordinates,glm::vec3(0,0,0));
-    Set_bounds(x,y,z);
 }
 void MeshBuilder::Add_vertex(glm::vec3 position,glm::vec2 texture_coordinates,glm::vec3 normal)
 {
-    float x,y,z;
-    x=position.x;
-    y=position.y;
-    z=position.z;
     to_modify.add_vertex(position,texture_coordinates,normal);
-    Set_bounds(x,y,z);
-}
-void MeshBuilder::Set_bounds(float x,float y,float z)
-{
-    float params[] {x,y,z};
-    for(int i=0; i<6; i+=2)
-    {
-        float current_bound=params[i/2];
-        if(to_modify.has_not_set_bounds)
-        {
-            to_modify.bounds[i]=current_bound;
-            to_modify.bounds[i+1]=current_bound;
-        }
-        else
-        {
-            if(current_bound<to_modify.bounds[i])
-                to_modify.bounds[i]=current_bound;
-            if(current_bound>to_modify.bounds[i+1])
-                to_modify.bounds[i+1]=current_bound;
-        }
-
-    }
-    to_modify.has_not_set_bounds=false;
 }
 void MeshBuilder::Add_cube(glm::vec3 position)
 {

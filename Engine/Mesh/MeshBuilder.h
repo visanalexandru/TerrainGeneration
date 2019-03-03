@@ -14,7 +14,6 @@ public:
     void Add_face(glm::vec3 position,int face_index);
     void Add_cube(glm::vec3 position);
     void Add_face(glm::vec3 position,float heights[],float unit,glm::vec3 normal[]);
-    void Set_bounds(float x,float y,float z);
     virtual ~MeshBuilder();
 protected:
 

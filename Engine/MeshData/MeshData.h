@@ -26,6 +26,7 @@ public:
 protected:
 
 private:
+    void Set_bounds(glm::vec3 to_add);
     int vertices_list_size;
     int triangles_list_size;
     float* verticeslist;
