@@ -17,12 +17,33 @@ void Mesh::bind_mesh(bool bind_texture_and_shader)
     bind_vertex_array();
 
 }
+float*Mesh::Get_bounds_pointer()
+{
+    return bounds;
+}
+ShaderProgram*Mesh::Get_shader()
+{
+    return shader_program;
+}
+Texture*Mesh::Get_texture()
+{
+    return texture;
+}
 void Mesh::get_bounds(MeshData&data)
 {
     for(int i=0; i<6; i++)
     {
         bounds[i]=data.bounds[i];
     }
+}
+unsigned Mesh::Get_triangles_size()
+{
+    return triangles_size;
+
+}
+unsigned Mesh::Get_vertices_size()
+{
+    return vertices_size;
 }
 void Mesh::bind_vertex_array()
 {

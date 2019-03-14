@@ -12,11 +12,16 @@ void Drawable3d::Set_mesh(Mesh&new_mesh)
 }
 void Drawable3d::UpdateAABB(Mesh&new_mesh)
 {
-    glm::vec3 off(new_mesh.bounds[0],new_mesh.bounds[2],new_mesh.bounds[4]);
+    float*b_pointer=new_mesh.Get_bounds_pointer();
+    glm::vec3 off(b_pointer[0],b_pointer[2],b_pointer[4]);
     AABB_position=get_position()+off;
-    dimensions.x=new_mesh.bounds[1]-new_mesh.bounds[0];
-    dimensions.y=new_mesh.bounds[3]-new_mesh.bounds[2];
-    dimensions.z=new_mesh.bounds[5]-new_mesh.bounds[4];
+    dimensions.x=b_pointer[1]-b_pointer[0];
+    dimensions.y=b_pointer[3]-b_pointer[2];
+    dimensions.z=b_pointer[5]-b_pointer[4];
+}
+Mesh* Drawable3d::Get_mesh()
+{
+    return mesh;
 }
 Drawable3d::~Drawable3d()
 {

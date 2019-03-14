@@ -25,7 +25,7 @@ vec3 get_color()
     {
         float posy=ypos-60;
         posy=min(posy,10);
-        ret=vec3(1,0.8,1)*get_gradient(60)+vec3(1,0.3,1)*get_gradient(posy)*10;
+        ret=vec3(1,0.8,1)*get_gradient(60)+vec3(2,0.1,2)*get_gradient(posy)*2;
     }
     return ret;
 }

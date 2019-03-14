@@ -11,8 +11,9 @@ public:
     virtual ~Drawable3d();
     virtual void Set_mesh(Mesh&new_mesh);
     void UpdateAABB(Mesh&new_mesh);
-    Mesh*mesh;
+    Mesh*Get_mesh();
 protected:
+    Mesh*mesh;
 
 private:
 };

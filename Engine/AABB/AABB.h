@@ -9,12 +9,15 @@ typedef glm::vec3 Vec3;
 class AABB
 {
 public:
-    Vec3 AABB_position;
-    Vec3 dimensions;
+
     AABB(Vec3 positionin, Vec3 dimensionin);
     glm::vec3 getVN(const glm::vec3& normal);
     glm::vec3 getVP(const glm::vec3& normal);
     virtual ~AABB();
+protected:
+    Vec3 AABB_position;
+    Vec3 dimensions;
+
 };
 
 #endif // AABB_H
