@@ -26,7 +26,7 @@ void TerrainChunk::init_meshes(ShaderProgram*p,Texture2d*t)
 }
 void TerrainChunk::init_aux()
 {
-    int sizet=2*(sizeofmesh+1);
+    int sizet=2*(sizeofmesh)+1;
     for(int i=0; i<sizet; i++)
         for(int k=0; k<sizet; k++)
         {
@@ -38,10 +38,10 @@ void TerrainChunk::generate_normal_map()
 {
     float p1,p2,p3,p4;
     glm::vec3 a,b,c,d,normal1,normal2,avrg;
-    int maxx=2*(sizeofmesh+1);
-    for(int i=0; i<maxx-1; i++)
+    int maxx=2*(sizeofmesh);
+    for(int i=0; i<maxx; i++)
     {
-        for(int k=0; k<maxx-1; k++)
+        for(int k=0; k<maxx; k++)
         {
             p1=heightmap.values[i][k];
             p2=heightmap.values[i][k+1];
@@ -75,7 +75,7 @@ glm::vec3 TerrainChunk::calculate_normal(glm::vec3 p1,glm::vec3 p2,glm::vec3 p3)
 }
 void TerrainChunk::build_meshes_data()
 {
-    int size=(sizeofmesh+1)*2;
+    int size=(sizeofmesh)*2+1;
     init_aux();
     heightmap_builder.generate_heightmap(&heightmap,size,2);
     generate_normal_map();

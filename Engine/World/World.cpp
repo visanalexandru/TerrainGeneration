@@ -3,8 +3,8 @@
 World::World(ShaderProgram*prog,Texture2d*tex,Camera&p_camera,int view_rangein,int chunk_sizein):
     scene(tex,prog),
     player_camera(p_camera),
-    auxiliary(2*(chunk_sizein+1)),
-    normal_auxiliary(2*(chunk_sizein+1))
+    auxiliary(2*(chunk_sizein)+1),
+    normal_auxiliary(2*(chunk_sizein)+1)
 {
     //ctor
     terrain_shader=prog;
